@@ -1,0 +1,1 @@
+# dalete_edit_django
