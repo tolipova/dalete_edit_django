@@ -1,6 +1,7 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
+from .forms import *
 # Create your views here.
 def company(request):
     comp = Company.objects.all()
@@ -9,17 +10,30 @@ def company(request):
     }
     return render(request, 'table.html', context)
 
-def delete(request,id):
+def add(request):
+    form = CompanyForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('company')
+    else:
+        form = CompanyForm()    
+    return render(request, 'add.html', {'form':form})   
+
+
+def delete(request, id):
     post = Company.objects.get(id=id)
     post.delete()
     return redirect('company')
+
+
 
 def edit(request,id):
     post = Company.objects.get(id=id)
     context = {
         'post':post
     }
-    return render(request, 'update.html',context)
+    return render(request, 'update.html', context)
 
 def editrecord(request,id):
     name = request.POST['name']
@@ -32,5 +46,5 @@ def editrecord(request,id):
     info.logo = logo
 
     info.save()
-    return HttpResponse(f"Saved your info")
+    return redirect('company')
     

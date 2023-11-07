@@ -6,12 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="editrecord/{{post.id}}" method="PoST">
-        {% csrf token %}
+    <form action="editrecord/{{post.id}}" method="POST">
+        {% csrf_token %}
+        
         <input type="text" name="name" value="{{post.name}}">
         <input type="text" name="about" value="{{post.about}}">
         <input type="text" name="logo" value="{{post.logo}}">
-        <button type="submit">Save</button>
+        <button type="save">Save</button>
     </form>
 </body>
 </html>
